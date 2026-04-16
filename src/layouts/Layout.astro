@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title = 'Áridos Santa María | Arena, Ripio y Gravilla en Freire, Novena Región',
+  description = 'Venta y despacho de áridos en Freire, Araucanía. Arena, ripio, gravilla, grava, integral, base chancada y bolones. Despachos a toda la Novena Región. Cotiza por WhatsApp.',
+  canonical = 'https://aridossantamaria.cl',
+} = Astro.props;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Áridos Santa María',
+  description: 'Venta y despacho de áridos en Freire, Araucanía.',
+  url: canonical,
+  telephone: ['+56985018360', '+56956673196'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Km 9.5 Camino Teodoro Schmidt, pasado cruce Los Yugos',
+    addressLocality: 'Freire',
+    addressRegion: 'Araucanía',
+    addressCountry: 'CL',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -38.9848,
+    longitude: -72.7379,
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    opens: '08:00',
+    closes: '18:00',
+  },
+  areaServed: {
+    '@type': 'State',
+    name: 'Araucanía',
+  },
+  hasMap: `https://maps.google.com/?q=-38.9848,-72.7379`,
+};
+---
+
+<!doctype html>
+<html lang="es-CL" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="áridos Freire, áridos Araucanía, áridos Temuco, arena ripio Freire, gravilla Novena Región, base chancada Araucanía, áridos Santa María, venta áridos, despacho áridos" />
+    <meta name="author" content="Áridos Santa María" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#020617" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:site_name" content="Áridos Santa María" />
+
+    <!-- Geo Meta Tags (SEO Local) -->
+    <meta name="geo.region" content="CL-AR" />
+    <meta name="geo.placename" content="Freire, Araucanía, Chile" />
+    <meta name="geo.position" content="-38.9848;-72.7379" />
+    <meta name="ICBM" content="-38.9848, -72.7379" />
+
+    <!-- Structured Data JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon placeholder -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  </head>
+
+  <body class="bg-slate-950 text-slate-100 font-sans antialiased">
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,429 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import WhatsAppBtn from '../components/WhatsAppBtn.astro';
+import MapSection from '../components/MapSection.astro';
+
+const WA_URL = 'https://wa.me/56985018360?text=Hola%2C%20necesito%20cotizar%20%C3%A1ridos';
+
+const productos = [
+  {
+    name: 'Arena',
+    desc: 'Arena fina y gruesa para construcción y morteros.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"/>
+    </svg>`,
+  },
+  {
+    name: 'Ripio',
+    desc: 'Ripio para caminos, rellenos y obras civiles.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zm0 9.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zm9.75-9.75A2.25 2.25 0 0115.75 3.75H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zm0 9.75A2.25 2.25 0 0115.75 13.5H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/>
+    </svg>`,
+  },
+  {
+    name: 'Gravilla',
+    desc: 'Gravilla seleccionada para hormigones y drenajes.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
+    </svg>`,
+  },
+  {
+    name: 'Grava',
+    desc: 'Grava de distintas granulometrías para obra gruesa.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/>
+    </svg>`,
+  },
+  {
+    name: 'Integral',
+    desc: 'Material integral para compactación de suelos y bases.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+    </svg>`,
+  },
+  {
+    name: 'Base Chancada',
+    desc: 'Base chancada para caminos y fundaciones estructurales.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/>
+    </svg>`,
+  },
+  {
+    name: 'Bolones',
+    desc: 'Bolones para muros de contención, enrocados y paisajismo.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"/>
+    </svg>`,
+  },
+];
+---
+
+<Layout>
+  <Navbar />
+
+  <!-- ════════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════════ -->
+  <section
+    id="inicio"
+    class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-16"
+  >
+    <!-- Background: dark gradient + placeholder for hero image -->
+    <div class="absolute inset-0 z-0">
+      <!-- Hero image placeholder (replace with real image) -->
+      <img
+        src="/images/hero-bg.jpg"
+        alt="Áridos Santa María - Excavadora y camiones tolva en cantera"
+        class="w-full h-full object-cover object-center opacity-25"
+        width="1920"
+        height="1080"
+        loading="eager"
+        fetchpriority="high"
+        onerror="this.style.display='none'"
+      />
+      <!-- Gradient overlays -->
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/80"></div>
+    </div>
+
+    <!-- Orange geometric accent lines -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-80 z-10"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent z-10"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 flex flex-col items-center text-center max-w-5xl mx-auto w-full">
+
+      <!-- ── LOGO (protagonista) ── -->
+      <div class="relative mb-10">
+        <!-- Outer glow ring -->
+        <div class="absolute inset-0 rounded-full bg-amber-500/20 blur-3xl scale-110 pointer-events-none"></div>
+        <!-- Mid ring decorativa -->
+        <div class="absolute -inset-3 rounded-full border border-amber-500/20 animate-pulse-slow pointer-events-none"></div>
+        <!-- Logo container -->
+        <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden
+          border-4 border-amber-500/50
+          shadow-[0_0_60px_rgba(245,158,11,0.4),0_0_120px_rgba(245,158,11,0.15)]
+          bg-slate-950/80 backdrop-blur-sm
+          flex items-center justify-center">
+          <img
+            src="/logo.png"
+            alt="Logo Áridos Santa María"
+            class="w-full h-full object-contain p-6"
+            width="384"
+            height="384"
+            fetchpriority="high"
+            onerror="this.parentElement.innerHTML='<span class=\'text-amber-400 font-black text-5xl tracking-tight\'>ASM</span>'"
+          />
+        </div>
+      </div>
+
+      <!-- Separador naranja -->
+      <div class="flex items-center gap-4 mb-8 w-full max-w-sm">
+        <div class="flex-1 h-px bg-gradient-to-r from-transparent to-amber-500/60"></div>
+        <span class="text-amber-400/80 text-xs font-bold tracking-widest uppercase">Freire · Araucanía</span>
+        <div class="flex-1 h-px bg-gradient-to-l from-transparent to-amber-500/60"></div>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight mb-5">
+        Áridos de
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500">
+          Alta Calidad
+        </span>
+        <span class="block text-3xl sm:text-4xl md:text-5xl mt-1 text-slate-300 font-bold">
+          para la Novena Región
+        </span>
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="text-slate-400 text-base md:text-lg max-w-xl leading-relaxed mb-10">
+        Ubicados en <strong class="text-slate-200">Km 9.5 pasado cruce Los Yugos, Freire.</strong>
+        Despachos de arena, ripio, gravilla y más — directo de cantera.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+        <WhatsAppBtn size="lg" />
+        <a
+          href="#productos"
+          class="inline-flex items-center gap-2 px-7 py-4 rounded-xl border-2 border-slate-700
+            text-slate-300 font-semibold text-base
+            hover:border-amber-500/60 hover:text-amber-400 transition-all duration-200"
+        >
+          Ver productos
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Trust strip -->
+      <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 border-t border-slate-800/70 pt-8 w-full">
+        {[
+          { label: 'Uso Industrial' },
+          { label: 'Despacho a domicilio' },
+          { label: 'Venta por m³' },
+          { label: 'Material Selecto' },
+        ].map((badge) => (
+          <div class="flex items-center gap-2 text-slate-500 text-sm font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
+            {badge.label}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 opacity-40 animate-bounce">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       PRODUCTOS SECTION
+  ════════════════════════════════════════ -->
+  <section id="productos" class="bg-slate-950 py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center mb-14">
+        <span class="inline-block text-amber-400 text-sm font-semibold tracking-widest uppercase mb-3">
+          Catálogo
+        </span>
+        <h2 class="text-3xl md:text-4xl font-black text-white mb-4">
+          Nuestros <span class="text-amber-400">Productos</span>
+        </h2>
+        <p class="text-slate-400 max-w-xl mx-auto">
+          Material árido de primera calidad para construcción, obras civiles, vialidad y proyectos industriales.
+        </p>
+        <div class="w-16 h-1 bg-amber-500 mx-auto rounded-full mt-5"></div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {productos.map((p) => (
+          <article class="group relative bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4 shadow-card
+            hover:border-amber-500/40 hover:shadow-orange-glow hover:-translate-y-1
+            transition-all duration-300 cursor-default">
+
+            <!-- Icon container -->
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400
+              group-hover:bg-amber-500/20 group-hover:border-amber-500/40 transition-colors duration-300">
+              <span class="w-6 h-6" set:html={p.icon}></span>
+            </div>
+
+            <!-- Product name -->
+            <h3 class="text-white font-bold text-lg leading-snug">{p.name}</h3>
+
+            <!-- Description -->
+            <p class="text-slate-400 text-sm leading-relaxed flex-1">{p.desc}</p>
+
+            <!-- CTA chip -->
+            <a
+              href={WA_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 text-amber-400 text-sm font-semibold
+                hover:text-amber-300 transition-colors duration-200 mt-auto"
+              aria-label={`Cotizar ${p.name} por WhatsApp`}
+            >
+              Cotizar
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+              </svg>
+            </a>
+
+            <!-- Corner accent -->
+            <div class="absolute top-0 right-0 w-16 h-16 overflow-hidden rounded-tr-2xl pointer-events-none">
+              <div class="absolute -top-8 -right-8 w-16 h-16 bg-amber-500/10 rotate-45 group-hover:bg-amber-500/20 transition-colors duration-300"></div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Bottom CTA -->
+      <div class="text-center mt-14">
+        <p class="text-slate-400 mb-5">¿Necesitas un producto en cantidad o una granulometría especial?</p>
+        <WhatsAppBtn text="Consultar disponibilidad y precios" size="md" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       LOGÍSTICA SECTION
+  ════════════════════════════════════════ -->
+  <section id="logistica" class="relative bg-slate-900 py-20 px-4 overflow-hidden">
+
+    <!-- Background texture -->
+    <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(45deg, #f59e0b 0, #f59e0b 1px, transparent 0, transparent 50%); background-size: 12px 12px;"></div>
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"></div>
+
+    <div class="relative max-w-6xl mx-auto">
+
+      <div class="text-center mb-14">
+        <span class="inline-block text-amber-400 text-sm font-semibold tracking-widest uppercase mb-3">
+          Logística
+        </span>
+        <h2 class="text-3xl md:text-4xl font-black text-white mb-4">
+          Despachos a Toda la
+          <span class="text-amber-400">Novena Región</span>
+        </h2>
+        <p class="text-slate-400 max-w-lg mx-auto">
+          Contamos con flota de camiones tolva para entregar directo en tu obra, donde la necesites.
+        </p>
+        <div class="w-16 h-1 bg-amber-500 mx-auto rounded-full mt-5"></div>
+      </div>
+
+      <!-- Feature cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+        {[
+          {
+            title: 'Flota Propia',
+            desc: 'Camiones tolva propios para garantizar puntualidad y control total del despacho.',
+            icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/>
+            </svg>`,
+          },
+          {
+            title: 'Toda la Araucanía',
+            desc: 'Llegamos a Temuco, Freire, Loncoche, Villarrica, Pitrufquén, Lautaro y más.',
+            icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/>
+            </svg>`,
+          },
+          {
+            title: 'Entrega Oportuna',
+            desc: 'Coordinamos el despacho según tu cronograma de obra, sin retrasos.',
+            icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>`,
+          },
+        ].map((feat) => (
+          <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-7 flex flex-col gap-4
+            hover:border-amber-500/30 transition-colors duration-300">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              <span class="w-6 h-6" set:html={feat.icon}></span>
+            </div>
+            <h3 class="text-white font-bold text-lg">{feat.title}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">{feat.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Big CTA banner -->
+      <div class="relative bg-gradient-to-r from-amber-600/20 via-amber-500/10 to-amber-600/20 border border-amber-500/30 rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="text-white font-black text-2xl md:text-3xl mb-2">¿Listo para pedir tu carga?</h3>
+          <p class="text-slate-400">Contáctanos y coordinamos el despacho de inmediato.</p>
+        </div>
+        <WhatsAppBtn text="Pedir despacho ahora" size="md" class="shrink-0" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       MAP SECTION
+  ════════════════════════════════════════ -->
+  <MapSection />
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer class="bg-slate-950 border-t border-slate-800/80 py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+
+        <!-- Brand -->
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center">
+              <span class="text-amber-400 font-black text-sm">ASM</span>
+            </div>
+            <span class="text-white font-bold text-lg">Áridos Santa María</span>
+          </div>
+          <p class="text-slate-500 text-sm leading-relaxed">
+            Proveedor de áridos de alta calidad en la Región de la Araucanía. Compromiso, calidad y puntualidad en cada despacho.
+          </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="flex flex-col gap-3">
+          <h4 class="text-white font-semibold mb-1">Contacto</h4>
+          <a href="tel:+56985018360" class="flex items-center gap-2 text-slate-400 hover:text-amber-400 transition-colors text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            +56 9 8501 8360
+          </a>
+          <a href="tel:+56956673196" class="flex items-center gap-2 text-slate-400 hover:text-amber-400 transition-colors text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            +56 9 5667 3196
+          </a>
+          <a
+            href="https://wa.me/56985018360?text=Hola%2C%20necesito%20cotizar%20%C3%A1ridos"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors text-sm font-semibold"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Escribir por WhatsApp
+          </a>
+        </div>
+
+        <!-- Location -->
+        <div class="flex flex-col gap-3">
+          <h4 class="text-white font-semibold mb-1">Ubicación</h4>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Km 9.5 Camino Teodoro Schmidt<br />
+            Pasado cruce Los Yugos<br />
+            <strong class="text-slate-300">Freire, Araucanía</strong>
+          </p>
+          <div class="flex flex-wrap gap-2 mt-1">
+            {['Temuco', 'Freire', 'Loncoche', 'Villarrica'].map((city) => (
+              <span class="text-xs bg-slate-800 text-slate-400 px-2.5 py-1 rounded-full border border-slate-700">
+                {city}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-slate-600 text-sm">© 2026 Áridos Santa María. Todos los derechos reservados.</p>
+        <p class="text-slate-700 text-xs">Freire · Región de la Araucanía · Chile</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp button (mobile) -->
+  <a
+    href="https://wa.me/56985018360?text=Hola%2C%20necesito%20cotizar%20%C3%A1ridos"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Abrir WhatsApp"
+    class="fixed bottom-6 right-5 z-50 w-14 h-14 rounded-full
+      bg-gradient-to-br from-amber-400 to-amber-600
+      flex items-center justify-center
+      shadow-[0_4px_20px_rgba(245,158,11,0.6)]
+      hover:scale-110 hover:shadow-[0_6px_30px_rgba(245,158,11,0.75)]
+      active:scale-95 transition-all duration-200
+      md:hidden"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-slate-950" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+</Layout>

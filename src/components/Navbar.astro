@@ -1,0 +1,198 @@
+---
+const links = [
+  { href: '#inicio',    label: 'Inicio'    },
+  { href: '#productos', label: 'Productos' },
+  { href: '#logistica', label: 'Logística' },
+  { href: '#ubicacion', label: 'Ubicación' },
+];
+
+const WA_URL = 'https://wa.me/56985018360?text=Hola%2C%20necesito%20cotizar%20%C3%A1ridos';
+---
+
+<header
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <!-- Backdrop -->
+  <div
+    id="navbar-bg"
+    class="absolute inset-0 bg-slate-950/0 backdrop-blur-none border-b border-transparent transition-all duration-300"
+  ></div>
+
+  <nav class="relative max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+
+    <!-- Brand -->
+    <a
+      href="#inicio"
+      class="flex items-center gap-2.5 group"
+      aria-label="Áridos Santa María — Inicio"
+    >
+      <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center
+        group-hover:bg-amber-500/30 transition-colors duration-200 shrink-0">
+        <span class="text-amber-400 font-black text-xs leading-none">ASM</span>
+      </div>
+      <span class="text-white font-bold text-base leading-tight hidden sm:block">
+        Áridos <span class="text-amber-400">Santa María</span>
+      </span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden md:flex items-center gap-1" role="list">
+      {links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            data-navlink
+            class="relative px-4 py-2 rounded-lg text-sm font-medium text-slate-400
+              hover:text-white hover:bg-slate-800/60 transition-all duration-200
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/60"
+          >
+            {link.label}
+            <!-- Active underline indicator -->
+            <span
+              class="nav-indicator absolute bottom-0.5 left-4 right-4 h-0.5 rounded-full
+                bg-amber-400 scale-x-0 transition-transform duration-200 origin-center"
+            ></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Desktop CTA -->
+    <a
+      href={WA_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl
+        bg-amber-500 hover:bg-amber-400 active:bg-amber-600
+        text-slate-950 font-bold text-sm
+        transition-all duration-200 hover:shadow-[0_0_20px_rgba(245,158,11,0.45)]"
+      aria-label="Cotizar por WhatsApp"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 shrink-0" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Cotizar
+    </a>
+
+    <!-- Mobile: hamburger button -->
+    <button
+      id="menu-btn"
+      type="button"
+      aria-label="Abrir menú de navegación"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      class="md:hidden relative w-9 h-9 flex flex-col items-center justify-center gap-1.5
+        rounded-lg hover:bg-slate-800/60 transition-colors duration-200
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/60"
+    >
+      <span class="hamburger-line block w-5 h-0.5 bg-slate-300 rounded-full transition-all duration-300 origin-center"></span>
+      <span class="hamburger-line block w-5 h-0.5 bg-slate-300 rounded-full transition-all duration-300 origin-center"></span>
+      <span class="hamburger-line block w-5 h-0.5 bg-slate-300 rounded-full transition-all duration-300 origin-center"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    role="dialog"
+    aria-label="Menú de navegación"
+    class="md:hidden overflow-hidden max-h-0 transition-[max-height] duration-300 ease-in-out"
+  >
+    <div class="bg-slate-950/95 backdrop-blur-md border-t border-slate-800/60 px-4 py-3 flex flex-col gap-1">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          data-navlink
+          data-mobile
+          class="px-4 py-3 rounded-xl text-slate-300 font-medium text-base
+            hover:bg-slate-800/70 hover:text-white transition-all duration-200"
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href={WA_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-2 flex items-center justify-center gap-2 py-3 rounded-xl
+          bg-amber-500 text-slate-950 font-bold text-base
+          hover:bg-amber-400 transition-colors duration-200"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Cotizar por WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // ── Scroll: fondo sólido al bajar ───────────────────────────────────────
+  const bg = document.getElementById('navbar-bg')!;
+  const onScroll = () => {
+    const scrolled = window.scrollY > 20;
+    bg.classList.toggle('bg-slate-950/95', scrolled);
+    bg.classList.toggle('backdrop-blur-md', scrolled);
+    bg.classList.toggle('border-slate-800/60', scrolled);
+    bg.classList.toggle('bg-slate-950/0', !scrolled);
+    bg.classList.toggle('backdrop-blur-none', !scrolled);
+    bg.classList.toggle('border-transparent', !scrolled);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ── Hamburger toggle ────────────────────────────────────────────────────
+  const btn        = document.getElementById('menu-btn')!;
+  const mobileMenu = document.getElementById('mobile-menu')!;
+  const lines      = btn.querySelectorAll<HTMLElement>('.hamburger-line');
+
+  const closeMenu = () => {
+    btn.setAttribute('aria-expanded', 'false');
+    mobileMenu.style.maxHeight = '0';
+    lines[0].style.transform = '';
+    lines[1].style.opacity   = '1';
+    lines[2].style.transform = '';
+  };
+
+  btn.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    if (isOpen) {
+      closeMenu();
+    } else {
+      btn.setAttribute('aria-expanded', 'true');
+      mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+      lines[0].style.transform = 'translateY(8px) rotate(45deg)';
+      lines[1].style.opacity   = '0';
+      lines[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+    }
+  });
+
+  // Cierra menú al hacer clic en un link
+  mobileMenu.querySelectorAll('a[data-mobile]').forEach((a) =>
+    a.addEventListener('click', closeMenu)
+  );
+
+  // ── Active section via IntersectionObserver ─────────────────────────────
+  const desktopLinks = document.querySelectorAll<HTMLAnchorElement>('a[data-navlink]:not([data-mobile])');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        desktopLinks.forEach((link) => {
+          const active = link.getAttribute('href') === `#${id}`;
+          const indicator = link.querySelector<HTMLElement>('.nav-indicator');
+          link.classList.toggle('text-white', active);
+          link.classList.toggle('text-slate-400', !active);
+          if (indicator) indicator.style.transform = active ? 'scaleX(1)' : 'scaleX(0)';
+        });
+      });
+    },
+    { threshold: 0.35 }
+  );
+
+  document.querySelectorAll<HTMLElement>('section[id]').forEach((s) => observer.observe(s));
+</script>
