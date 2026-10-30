@@ -13,6 +13,8 @@ const {
   canonical = 'https://aridossantamaria.cl',
 } = Astro.props;
 
+const ogImage = new URL('/images/og-aridos-santa-maria.jpg', canonical).href;
+
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -43,6 +45,9 @@ const structuredData = {
     name: 'Araucanía',
   },
   hasMap: `https://maps.google.com/?q=-38.9848,-72.7379`,
+  image: ogImage,
+  logo: new URL('/logo.png', canonical).href,
+  sameAs: ['https://instagram.com/aridossantamaria'],
 };
 ---
 
@@ -70,6 +75,27 @@ const structuredData = {
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="es_CL" />
     <meta property="og:site_name" content="Áridos Santa María" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Excavadoras y planta chancadora de Áridos Santa María en Freire" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Imagen principal del banner -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="/images/excavadoras-volvo.webp"
+      imagesrcset="/images/excavadoras-volvo-sm.webp 800w, /images/excavadoras-volvo.webp 1600w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
 
     <!-- Geo Meta Tags (SEO Local) -->
     <meta name="geo.region" content="CL-AR" />
@@ -95,5 +121,20 @@ const structuredData = {
 
   <body class="bg-slate-950 text-slate-100 font-sans antialiased">
     <slot />
+
+    <script>
+      // Revela elementos .reveal al entrar en pantalla
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+    </script>
   </body>
 </html>

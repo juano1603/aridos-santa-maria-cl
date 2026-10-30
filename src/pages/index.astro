@@ -59,152 +59,233 @@ const productos = [
     </svg>`,
   },
 ];
+
+const heroSlides = [
+  { img: 'excavadoras-volvo', caption: 'Excavadoras Volvo en faena', pos: 'center 60%' },
+  { img: 'planta-chancadora', caption: 'Planta chancadora y harnero', pos: '60% center' },
+  { img: 'acopio-komatsu',    caption: 'Acopio de material chancado', pos: 'center 70%' },
+  { img: 'carga-camion',      caption: 'Carga de camión tolva', pos: 'center 55%' },
+];
+
+const galeria = [
+  { img: 'excavadoras-volvo', tag: 'Maquinaria',  title: 'Excavadoras Volvo EC210', alt: 'Excavadoras Volvo EC210 trabajando junto a la planta chancadora', pos: 'center', span: 'col-span-2 row-span-2' },
+  { img: 'planta-chancadora', tag: 'Planta',      title: 'Chancado y harneado',      alt: 'Planta chancadora con harnero vibratorio en mantención', pos: 'center 40%', span: 'col-span-2' },
+  { img: 'acopio-komatsu',    tag: 'Acopio',      title: 'Material chancado',        alt: 'Excavadora Komatsu cargando desde acopio de material chancado', pos: 'center 65%', span: '' },
+  { img: 'planta-laguna',     tag: 'Pozo lastre', title: 'Planta y acopios',         alt: 'Planta de áridos y acopio de gravilla reflejados en la laguna del pozo', pos: 'center 60%', span: '' },
+  { img: 'carga-camion',      tag: 'Despacho',    title: 'Carga de camión tolva',    alt: 'Camión tolva cargando ripio en el pozo lastre con niebla matinal', pos: 'center 60%', span: 'col-span-2' },
+  { img: 'acopio-laguna',     tag: 'Extracción',  title: 'Acopios de ripio',         alt: 'Excavadora Volvo sobre acopios de ripio junto a la laguna', pos: 'center 70%', span: 'col-span-2' },
+];
 ---
 
 <Layout>
   <Navbar />
 
   <!-- ════════════════════════════════════════
-       HERO SECTION
+       HERO BANNER
   ════════════════════════════════════════ -->
   <section
     id="inicio"
-    class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-16"
+    class="relative min-h-[100svh] flex flex-col overflow-hidden bg-slate-950"
   >
-    <!-- Background: dark gradient + placeholder for hero image -->
-    <div class="absolute inset-0 z-0">
-      <!-- Hero image placeholder (replace with real image) -->
-      <img
-        src="/images/hero-bg.jpg"
-        alt="Áridos Santa María - Excavadora y camiones tolva en pozo lastre"
-        class="w-full h-full object-cover object-center opacity-25"
-        width="1920"
-        height="1080"
-        loading="eager"
-        fetchpriority="high"
-        onerror="this.style.display='none'"
-      />
-      <!-- Gradient overlays -->
-      <div class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/80"></div>
-    </div>
-
-    <!-- Orange geometric accent lines -->
-    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-80 z-10"></div>
-    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent z-10"></div>
-
-    <!-- Content -->
-    <div class="relative z-10 flex flex-col items-center text-center max-w-5xl mx-auto w-full">
-
-      <!-- ── LOGO (protagonista) ── -->
-      <div class="relative mb-10">
-        <!-- Outer glow ring -->
-        <div class="absolute inset-0 rounded-full bg-amber-500/20 blur-3xl scale-110 pointer-events-none"></div>
-        <!-- Mid ring decorativa -->
-        <div class="absolute -inset-3 rounded-full border border-amber-500/20 animate-pulse-slow pointer-events-none"></div>
-        <!-- Logo container -->
-        <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden
-          border-4 border-amber-500/50
-          shadow-[0_0_60px_rgba(245,158,11,0.4),0_0_120px_rgba(245,158,11,0.15)]
-          bg-slate-950/80 backdrop-blur-sm
-          flex items-center justify-center">
+    <!-- Slideshow de fotos reales -->
+    <div id="hero-slides" class="absolute inset-0 z-0" aria-hidden="true">
+      {heroSlides.map((s, i) => (
+        <div class:list={['hero-slide absolute inset-0 overflow-hidden', { 'is-active': i === 0 }]} data-caption={s.caption}>
           <img
-            src="/logo.png"
-            alt="Logo Áridos Santa María"
-            class="w-full h-full object-cover"
-            width="384"
-            height="384"
-            fetchpriority="high"
-            onerror="this.parentElement.innerHTML='<span class=\'text-amber-400 font-black text-5xl tracking-tight\'>ASM</span>'"
+            src={`/images/${s.img}.webp`}
+            srcset={`/images/${s.img}-sm.webp 800w, /images/${s.img}.webp 1600w`}
+            sizes="100vw"
+            alt=""
+            class="w-full h-full object-cover will-change-transform"
+            style={`object-position: ${s.pos};`}
+            width="1600"
+            height="1200"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'low'}
+            decoding="async"
           />
         </div>
-      </div>
+      ))}
+    </div>
 
-      <!-- Separador naranja -->
-      <div class="flex items-center gap-4 mb-8 w-full max-w-sm">
-        <div class="flex-1 h-px bg-gradient-to-r from-transparent to-amber-500/60"></div>
-        <span class="text-amber-400/80 text-xs font-bold tracking-widest uppercase">Freire · Araucanía</span>
-        <div class="flex-1 h-px bg-gradient-to-l from-transparent to-amber-500/60"></div>
-      </div>
+    <!-- Overlays para legibilidad -->
+    <div class="absolute inset-0 z-[1] bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-slate-950/10"></div>
+    <div class="absolute inset-0 z-[1] bg-gradient-to-t from-slate-950 via-slate-950/20 to-slate-950/50"></div>
+    <div class="absolute inset-0 z-[1] opacity-[0.07] mix-blend-overlay pointer-events-none"
+      style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 3px 3px;"></div>
 
-      <!-- Main Headline -->
-      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight mb-5">
-        Áridos de
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500">
-          Alta Calidad
-        </span>
-        <span class="block text-3xl sm:text-4xl md:text-5xl mt-1 text-slate-300 font-bold">
-          para la Novena Región
-        </span>
-      </h1>
+    <!-- Acento superior -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-amber-400/60 to-transparent z-10"></div>
 
-      <!-- Subheadline -->
-      <p class="text-slate-400 text-base md:text-lg max-w-xl leading-relaxed mb-10">
-        Ubicados en <strong class="text-slate-200">Km 9.5 pasado cruce Los Yugos, Freire.</strong>
-        Despachos de arena, ripio, gravilla y más — pozo lastre autorizado por la Municipalidad de Freire.
-      </p>
+    <!-- Contenido -->
+    <div class="relative z-10 flex-1 flex items-center w-full max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-10">
+      <div class="max-w-2xl">
 
-      <!-- CTA Buttons -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-        <WhatsAppBtn size="lg" />
-        <a
-          href="#productos"
-          class="inline-flex items-center gap-2 px-7 py-4 rounded-xl border-2 border-slate-700
-            text-slate-300 font-semibold text-base
-            hover:border-amber-500/60 hover:text-amber-400 transition-all duration-200"
-        >
-          Ver productos
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-          </svg>
-        </a>
-      </div>
+        <!-- Marca + badge -->
+        <div class="hero-rise flex items-center gap-4 mb-8" style="animation-delay: 0.1s">
+          <div class="relative shrink-0">
+            <div class="absolute inset-0 rounded-full bg-amber-500/30 blur-xl"></div>
+            <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-amber-400/70 bg-slate-950 shadow-[0_0_40px_rgba(245,158,11,0.35)]">
+              <img src="/logo.png" alt="Logo Áridos Santa María" class="w-full h-full object-cover" width="80" height="80" fetchpriority="high" />
+            </div>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <span class="text-white font-extrabold text-lg sm:text-xl tracking-tight leading-none">
+              Áridos <span class="text-amber-400">Santa María</span>
+            </span>
+            <span class="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">
+              <span class="relative flex w-2 h-2">
+                <span class="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+                <span class="relative inline-flex w-2 h-2 rounded-full bg-emerald-400"></span>
+              </span>
+              Planta en operación · Freire
+            </span>
+          </div>
+        </div>
 
-      <!-- Instagram -->
-      <div class="flex items-center gap-3 mb-8">
-        <div class="h-px w-12 bg-slate-800"></div>
+        <!-- Titular -->
+        <h1 class="hero-rise text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6" style="animation-delay: 0.25s">
+          Áridos que
+          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-600 pb-1">
+            construyen la
+          </span>
+          Araucanía.
+        </h1>
+
+        <!-- Bajada -->
+        <p class="hero-rise text-slate-300 text-base sm:text-lg max-w-xl leading-relaxed mb-9" style="animation-delay: 0.4s">
+          Extracción, chancado y despacho de arena, ripio, gravilla y base chancada desde nuestro
+          <strong class="text-white font-semibold">pozo lastre autorizado por la Municipalidad de Freire</strong>.
+          Maquinaria propia y entrega directa en tu obra.
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero-rise flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-10" style="animation-delay: 0.55s">
+          <WhatsAppBtn size="lg" />
+          <a
+            href="#productos"
+            class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl
+              border border-white/20 bg-white/5 backdrop-blur-md
+              text-white font-semibold text-base
+              hover:border-amber-400/70 hover:bg-white/10 hover:text-amber-300 transition-all duration-200"
+          >
+            Ver productos
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Instagram -->
         <a
           href="https://instagram.com/aridossantamaria"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-2 px-4 py-2 rounded-full
-            border border-slate-700/80 bg-slate-900/50 backdrop-blur-sm
-            text-slate-400 text-sm font-medium
-            hover:border-amber-500/50 hover:text-amber-400 hover:bg-slate-800/60
-            transition-all duration-200"
+          class="hero-rise inline-flex items-center gap-2 text-slate-400 text-sm font-medium hover:text-amber-400 transition-colors duration-200"
+          style="animation-delay: 0.7s"
           aria-label="Síguenos en Instagram"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
           </svg>
-          @aridossantamaria
+          Síguenos en <span class="text-slate-200">@aridossantamaria</span>
         </a>
-        <div class="h-px w-12 bg-slate-800"></div>
-      </div>
-
-      <!-- Trust strip -->
-      <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 border-t border-slate-800/70 pt-8 w-full">
-        {[
-          { label: 'Uso Industrial' },
-          { label: 'Despacho a domicilio' },
-          { label: 'Venta por m³' },
-          { label: 'Material Selecto' },
-        ].map((badge) => (
-          <div class="flex items-center gap-2 text-slate-500 text-sm font-medium">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
-            {badge.label}
-          </div>
-        ))}
       </div>
     </div>
 
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 opacity-40 animate-bounce">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-      </svg>
+    <!-- Barra inferior: indicadores + caption + sellos -->
+    <div class="relative z-10 w-full border-t border-white/10 bg-slate-950/55 backdrop-blur-md">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-5 flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-10">
+
+        <!-- Indicadores del slideshow -->
+        <div class="flex items-center gap-4 lg:w-[24rem] shrink-0">
+          <div class="flex items-center gap-2" role="tablist" aria-label="Fotos de la faena">
+            {heroSlides.map((s, i) => (
+              <button
+                type="button"
+                class:list={['hero-dot relative h-1 w-9 sm:w-11 rounded-full bg-white/20 overflow-hidden', { 'is-active': i === 0 }]}
+                data-index={i}
+                aria-label={`Ver foto: ${s.caption}`}
+              >
+                <span class="hero-dot-bar absolute inset-0 bg-amber-400 rounded-full"></span>
+              </button>
+            ))}
+          </div>
+          <p id="hero-caption" class="hero-caption text-xs text-slate-400 font-medium truncate">
+            {heroSlides[0].caption}
+          </p>
+        </div>
+
+        <!-- Sellos -->
+        <ul class="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-3 flex-1" role="list">
+          {[
+            { k: 'Autorizado', v: 'Municipalidad de Freire' },
+            { k: 'Flota propia', v: 'Excavadoras y tolvas' },
+            { k: 'Venta por m³', v: 'Retiro o despacho' },
+            { k: 'Toda la IX', v: 'Región de la Araucanía' },
+          ].map((b) => (
+            <li class="flex flex-col border-l-2 border-amber-500/70 pl-3">
+              <span class="text-white font-bold text-sm leading-tight">{b.k}</span>
+              <span class="text-slate-400 text-xs leading-tight mt-0.5">{b.v}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
+
+  <script>
+    const slides  = document.querySelectorAll<HTMLElement>('#hero-slides .hero-slide');
+    const dots    = document.querySelectorAll<HTMLButtonElement>('.hero-dot');
+    const caption = document.getElementById('hero-caption')!;
+    const INTERVAL = 7000;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = 0;
+    let timer: number | undefined;
+
+    const show = (next: number) => {
+      if (next === current) return;
+      const prev = slides[current];
+      prev.classList.remove('is-active');
+      prev.classList.add('is-prev');
+      window.setTimeout(() => prev.classList.remove('is-prev'), 1700);
+      dots[current].classList.remove('is-active');
+
+      current = next;
+      slides[current].classList.add('is-active');
+      // Reinicia la animación de la barra de progreso
+      void dots[current].offsetWidth;
+      dots[current].classList.add('is-active');
+
+      caption.style.opacity = '0';
+      caption.style.transform = 'translateY(4px)';
+      window.setTimeout(() => {
+        caption.textContent = slides[current].dataset.caption ?? '';
+        caption.style.opacity = '1';
+        caption.style.transform = 'none';
+      }, 350);
+    };
+
+    const start = () => {
+      window.clearInterval(timer);
+      if (!reduced) timer = window.setInterval(() => show((current + 1) % slides.length), INTERVAL);
+    };
+
+    dots.forEach((dot) =>
+      dot.addEventListener('click', () => {
+        show(Number(dot.dataset.index));
+        start();
+      })
+    );
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) window.clearInterval(timer);
+      else start();
+    });
+
+    document.documentElement.style.setProperty('--hero-interval', `${INTERVAL}ms`);
+    start();
+  </script>
 
   <!-- ════════════════════════════════════════
        PRODUCTOS SECTION
@@ -228,7 +309,7 @@ const productos = [
       <!-- Product Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {productos.map((p) => (
-          <article class="group relative bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4 shadow-card
+          <article class="reveal group relative bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4 shadow-card
             hover:border-amber-500/40 hover:shadow-orange-glow hover:-translate-y-1
             transition-all duration-300 cursor-default">
 
@@ -276,12 +357,143 @@ const productos = [
   </section>
 
   <!-- ════════════════════════════════════════
+       FAENA / GALERÍA SECTION
+  ════════════════════════════════════════ -->
+  <section id="faena" class="relative bg-slate-900 py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+        <div>
+          <span class="inline-block text-amber-400 text-sm font-semibold tracking-widest uppercase mb-3">
+            Nuestra faena
+          </span>
+          <h2 class="text-3xl md:text-4xl font-black text-white">
+            Así trabajamos en <span class="text-amber-400">Freire</span>
+          </h2>
+          <div class="w-16 h-1 bg-amber-500 rounded-full mt-5"></div>
+        </div>
+        <p class="text-slate-400 max-w-md md:text-right">
+          Fotos reales de nuestro pozo lastre: extracción, chancado, acopio y carga.
+          Sin intermediarios, directo desde la planta a tu obra.
+        </p>
+      </div>
+
+      <!-- Bento grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[160px] sm:auto-rows-[200px] md:auto-rows-[220px] gap-3 md:gap-4">
+        {galeria.map((g, i) => (
+          <button
+            type="button"
+            data-lightbox={i}
+            class:list={[
+              'reveal group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 text-left',
+              'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-400/60',
+              g.span,
+            ]}
+            style={`transition-delay: ${i * 70}ms`}
+            aria-label={`Ampliar foto: ${g.title}`}
+          >
+            <img
+              src={`/images/${g.img}-sm.webp`}
+              srcset={`/images/${g.img}-sm.webp 800w, /images/${g.img}.webp 1600w`}
+              sizes="(min-width: 768px) 50vw, 100vw"
+              alt={g.alt}
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              style={`object-position: ${g.pos};`}
+              width="800"
+              height="600"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute left-0 right-0 bottom-0 p-4 md:p-5">
+              <span class="block text-[10px] md:text-xs font-bold uppercase tracking-[0.18em] text-amber-400 mb-1">{g.tag}</span>
+              <span class="block text-white font-bold text-sm md:text-lg leading-tight">{g.title}</span>
+            </div>
+            <span class="absolute top-3 right-3 w-9 h-9 rounded-full bg-slate-950/60 backdrop-blur border border-white/15
+              flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/>
+              </svg>
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <dialog
+      id="lightbox"
+      class="m-auto w-full max-w-6xl bg-transparent p-4 backdrop:bg-slate-950/90 backdrop:backdrop-blur-sm"
+      aria-label="Foto ampliada"
+    >
+      <figure class="relative">
+        <img id="lightbox-img" src="" alt="" class="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl" />
+        <figcaption id="lightbox-cap" class="mt-4 text-center text-slate-300 text-sm"></figcaption>
+        <button type="button" data-lb="close" aria-label="Cerrar"
+          class="absolute -top-2 -right-2 sm:top-3 sm:right-3 w-10 h-10 rounded-full bg-slate-950/80 border border-white/15 text-white flex items-center justify-center hover:text-amber-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <button type="button" data-lb="prev" aria-label="Foto anterior"
+          class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-950/70 border border-white/15 text-white flex items-center justify-center hover:text-amber-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        </button>
+        <button type="button" data-lb="next" aria-label="Foto siguiente"
+          class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-950/70 border border-white/15 text-white flex items-center justify-center hover:text-amber-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </button>
+      </figure>
+    </dialog>
+  </section>
+
+  <script>
+    const items  = document.querySelectorAll<HTMLButtonElement>('[data-lightbox]');
+    const dialog = document.getElementById('lightbox') as HTMLDialogElement;
+    const lbImg  = document.getElementById('lightbox-img') as HTMLImageElement;
+    const lbCap  = document.getElementById('lightbox-cap')!;
+    let idx = 0;
+
+    const render = () => {
+      const img = items[idx].querySelector('img')!;
+      lbImg.src = img.src.replace('-sm.webp', '.webp');
+      lbImg.alt = img.alt;
+      lbCap.textContent = img.alt;
+    };
+    const step = (d: number) => { idx = (idx + d + items.length) % items.length; render(); };
+
+    items.forEach((el) => el.addEventListener('click', () => {
+      idx = Number(el.dataset.lightbox);
+      render();
+      dialog.showModal();
+    }));
+    dialog.querySelector('[data-lb="close"]')!.addEventListener('click', () => dialog.close());
+    dialog.querySelector('[data-lb="prev"]')!.addEventListener('click', () => step(-1));
+    dialog.querySelector('[data-lb="next"]')!.addEventListener('click', () => step(1));
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+  </script>
+
+  <!-- ════════════════════════════════════════
        LOGÍSTICA SECTION
   ════════════════════════════════════════ -->
-  <section id="logistica" class="relative bg-slate-900 py-20 px-4 overflow-hidden">
+  <section id="logistica" class="relative bg-slate-950 py-24 px-4 overflow-hidden">
 
-    <!-- Background texture -->
-    <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(45deg, #f59e0b 0, #f59e0b 1px, transparent 0, transparent 50%); background-size: 12px 12px;"></div>
+    <!-- Background photo -->
+    <img
+      src="/images/carga-camion.webp"
+      srcset="/images/carga-camion-sm.webp 800w, /images/carga-camion.webp 1600w"
+      sizes="100vw"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover opacity-30"
+      width="1600"
+      height="1200"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/75 to-slate-950"></div>
     <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"></div>
     <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"></div>
 
@@ -326,7 +538,7 @@ const productos = [
             </svg>`,
           },
         ].map((feat) => (
-          <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-7 flex flex-col gap-4
+          <div class="reveal bg-slate-950/60 backdrop-blur-md border border-slate-800 rounded-2xl p-7 flex flex-col gap-4
             hover:border-amber-500/30 transition-colors duration-300">
             <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
               <span class="w-6 h-6" set:html={feat.icon}></span>
@@ -365,8 +577,8 @@ const productos = [
         <!-- Brand -->
         <div class="flex flex-col gap-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center">
-              <span class="text-amber-400 font-black text-sm">ASM</span>
+            <div class="w-11 h-11 rounded-full overflow-hidden border-2 border-amber-500/50 bg-slate-950 shrink-0">
+              <img src="/logo.png" alt="" class="w-full h-full object-cover" width="44" height="44" loading="lazy" />
             </div>
             <span class="text-white font-bold text-lg">Áridos Santa María</span>
           </div>
@@ -435,15 +647,16 @@ const productos = [
       <!-- Divider -->
       <div class="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p class="text-slate-600 text-sm">© 2026 Áridos Santa María. Todos los derechos reservados.</p>
-        <div class="flex items-center gap-4">
+        <div class="flex flex-wrap items-center justify-center gap-4">
           <a
             href="https://southdev.cl"
             target="_blank"
             rel="noopener"
-            class="inline-flex items-center gap-1.5 text-slate-600 hover:text-amber-400 transition-colors text-xs"
+            class="group inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-800 bg-slate-900/60
+              text-slate-500 hover:text-white hover:border-[#6fa285]/60 transition-colors text-xs"
           >
-            <svg viewBox="0 0 24 21" width="10" height="9" aria-hidden="true"><path d="M12 0 24 21H0z" fill="#6fa285" /></svg>
-            Sitio web por SurDev
+            <svg viewBox="0 0 24 21" width="11" height="10" aria-hidden="true" class="transition-transform duration-300 group-hover:-translate-y-0.5"><path d="M12 0 24 21H0z" fill="#6fa285" /></svg>
+            Diseñado y desarrollado por <span class="font-bold text-slate-300 group-hover:text-[#8fc2a5]">SurDev</span>
           </a>
           <a
             href="https://instagram.com/aridossantamaria"
